@@ -56,7 +56,7 @@ cd /arquivos
 ```
 Vamos redefinir o caminho do PATH, apontando para o diretório em que foi realizado o wget do nosso cat "falso"
 ```
-PATH="/tmp:/tmp:/tmp"
+PATH="/tmp"
 ```
 Agora execute o binário e observe que será obtido root (isso ocorre pois o binário SUID está executando como root o nosso cat "falso", que por sua vez spawna um novo bash)
 ```
