@@ -4,7 +4,7 @@ Binários presentes no sistema, quando na situação de SUID, podem ser utilizad
 ```
 find / -perm -4000 2>&-
 ```
-Em seguida faça a consulta pelo nome do binário neste site: https://gtfobins.github.io/
+Em seguida faça a consulta pelo nome do binário neste site https://gtfobins.github.io/ e veja como a escalação de privilégio pode ser feita.
 
 Caso exista um binário específico (que não possa ser encontrado no repositório acima) é interessante realizar um disassembly para verificar se o mesmo, em algum momento da execução, executa outros binários do sistema. Veja o cenário abaixo:
 
